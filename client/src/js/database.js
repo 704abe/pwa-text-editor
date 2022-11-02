@@ -16,11 +16,14 @@ const initdb = async () =>
 export const putDb = async (content) => {
   console.log('PUT to the database');
   const jateDb = await openDB('jate', 1);
+  console.log('jateDb', jateDb);
   const tx = jateDb.transaction('jate', 'readwrite');
   const store = tx.objectStore('jate');
   const request = store.put({ id: 1, value: content });
+  console.log('request', request);
   const result = await request;
-  console.log(':rocket: - data saved to the database', result.value);
+  console.log('result', result);
+  console.log(':rocket: - data saved to the database', result?.value);
 }
 // TODO: Add logic for a method that gets all the content from the database
 export const getDb = async () => {
@@ -30,7 +33,7 @@ export const getDb = async () => {
   const store = tx.objectStore('jate');
   const request = store.get(1);
   const result = await request;
-  result ? console.log('data retrieved from database', result?.value) : console.log('data not found in the database')
+  result ? console.log('data successfully retrieved from database', result?.value) : console.log('data not found in the database')
   return result?.value
 };
 
